@@ -86,6 +86,7 @@ const TopNav = ({isAuthenticated}) => {
               wrapperCol={{span: 19}}
               labelCol={{span: 5}}
               className='modal-form'
+              onFinish={handleAlbumAdd}
           >
             <Form.Item
                 name='name'
