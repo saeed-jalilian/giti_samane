@@ -17,17 +17,24 @@ const TopNav = ({isAuthenticated}) => {
 
   const [isAlbumModalVisible, setIsAlbumModalVisible] = useState(true)
 
+
+  const handleModalCancel = () => {
+    setIsAlbumModalVisible(false)
+  }
+
   const handleAlbumAdd = async values => {
     dispatch(showLoading())
     const {name} = values
     const body = {name}
     try {
       await http.post(`${process.env.NextUrl}/api/albums`, body)
+      handleModalCancel()
       message.success('آلبوم با موفقیت اضافه شد')
     } catch (e) {
       message.error('متاسففانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
     }
   }
+
 
   return (
       <Fragment>
@@ -67,9 +74,12 @@ const TopNav = ({isAuthenticated}) => {
         </nav>
 
         <Modal
-            visible={true}
+            visible={isAlbumModalVisible}
             title='افزودن آلبوم جدید'
             className='modal-container'
+            okText='ثبت'
+            onOk={() => albumForm.submit()}
+            onCancel={handleModalCancel}
         >
           <Form
               form={albumForm}
