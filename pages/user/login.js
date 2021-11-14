@@ -31,7 +31,7 @@ const LoginPage = ({loginUser}) => {
   return (
       <div className='user-form-container'>
         <Form
-            name={loginForm}
+            form={loginForm}
             labelCol={{span: 4}}
             wrapperCol={{span: 20}}
             id='login-form'

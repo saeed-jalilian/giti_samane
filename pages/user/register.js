@@ -27,7 +27,7 @@ const RegisterPage = ({registerUser}) => {
   return (
       <div className='user-form-container'>
         <Form
-            name={registerForm}
+            form={registerForm}
             labelCol={{span: 5}}
             wrapperCol={{span: 19}}
             id='login-form'

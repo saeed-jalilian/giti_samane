@@ -11,11 +11,11 @@ export const loginUser = user => async dispatch => {
     password: user.password
   }
   try {
-    const res = await http.post(`${process.env.BackendApiUrl}/login`, body)
+    await http.post(`${process.env.BackendApiUrl}/login`, body)
     const decodedBtoa = btoa(`${body.username}:${body.password}`)
     dispatch({
       type: 'LOGIN_SUCCESS',
-      payload: body
+      payload: body.username
     })
     dispatch({
       type: 'SET_AUTH',
@@ -23,7 +23,6 @@ export const loginUser = user => async dispatch => {
     })
     // dispatch(loadUser())
     message.success('ورود موفقیت آمیز بود')
-    return res
   } catch (e) {
     dispatch({type: 'LOGIN_FAIL'})
   } finally {
