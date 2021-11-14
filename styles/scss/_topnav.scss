@@ -1,0 +1,21 @@
+#top-nav-container {
+  list-style: none;
+  padding: 35px;
+
+  li {
+    display: inline-block;
+    margin: 0 30px;
+    font-size: 1.4rem;
+
+    a {
+      color: inherit;
+      transition: $transition;
+      padding-bottom: 10px;
+
+      &:hover {
+        border-bottom: 1px solid #0070f3;
+        color: #0070f3;
+      }
+    }
+  }
+}

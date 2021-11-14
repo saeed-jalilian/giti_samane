@@ -1,0 +1,43 @@
+.user-form-container {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
+  #login-form {
+    width: 500px !important;
+
+    .form-btn-container {
+      width: 100%;
+
+      .form-btn {
+        width: 85px;
+        margin: auto;
+      }
+
+
+    }
+
+    .login-form-bottom {
+      text-align: center;
+
+      #sign-up-now {
+        font-size: 0.9em;
+
+        a {
+          color: #8d9df7;
+          transition: $transition;
+          padding-bottom: 5px;
+
+          &:hover {
+            border-bottom: 1px dotted #8d9df7;
+            color: lighten(#8d9df7, 3%);
+          }
+        }
+      }
+
+    }
+  }
+}
