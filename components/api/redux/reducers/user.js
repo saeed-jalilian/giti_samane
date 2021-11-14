@@ -2,7 +2,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   password: null,
-  token: null
+  auth: null
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -69,6 +69,11 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         user: null
+      }
+    case 'SET_AUTH':
+      return {
+        ...state,
+        auth: payload
       }
     default:
       return state

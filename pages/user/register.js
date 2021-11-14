@@ -1,22 +1,23 @@
-import {Fragment} from "react";
 import {connect} from "react-redux";
 import {Button, Form, Input, message, Typography} from "antd";
-import Link from "next/link";
+import {useRouter} from "next/router";
 
 import {registerUser} from "../../components/api/redux/actions/user";
 
 const RegisterPage = ({registerUser}) => {
   const [registerForm] = Form.useForm()
-  const {Text} = Typography
+  const router = useRouter()
 
 
   const handleRegister = async values => {
     const {username, password, rePassword} = values
+    const user = {username, password}
     if (password === rePassword) {
       try {
-
+        await registerUser(user)
+        await router.push(`${process.env.NextUrl}/user/login`)
       } catch (e) {
-
+        console.log(e)
       }
     } else {
       message.error('رمزهای عبور وارد شده باید یکسان باشند')
@@ -66,11 +67,11 @@ const RegisterPage = ({registerUser}) => {
               label='تکرار رمز عبور'
               name='rePassword'
               rules={[
-                  {
-                    required: true,
-                    message: 'تکرار کردن رمز عبور الزامیست'
-                  }
-                ]}
+                {
+                  required: true,
+                  message: 'تکرار کردن رمز عبور الزامیست'
+                }
+              ]}
           >
             <Input.Password
                 placeholder='رمز عبور خود را مجددا وارد کنید'

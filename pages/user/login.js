@@ -16,12 +16,13 @@ const LoginPage = ({loginUser}) => {
   const handleLogin = async values => {
     const {username, password} = values
     const user = {username, password}
+    await loginUser(user)
     try {
       dispatch(showLoading())
       await loginUser(user)
       await router.back()
     } catch (e) {
-
+      console.log(e)
     } finally {
       dispatch(hideLoading())
     }
