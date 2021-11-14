@@ -1,8 +1,9 @@
-import {Row, Col} from 'antd'
+import {connect} from "react-redux";
 import Link from "next/link"
 
 
-const TopNav = () => {
+const TopNav = ({isAuthenticated}) => {
+
   return (
       <nav>
         <ul id='top-nav-container'>
@@ -11,19 +12,30 @@ const TopNav = () => {
               خانه
             </Link>
           </li>
-          <li>
-            <Link href='/user/login'>
-              ورود
-            </Link>
-          </li>
-          <li>
-            <Link href='/login'>
-              گالری
-            </Link>
-          </li>
+          {!isAuthenticated ? (
+              <li>
+                <Link href='/user/login'>
+                  ورود
+                </Link>
+              </li>
+
+          ) : null}
+
+          {isAuthenticated ? (
+              <li>
+                <Link href='/gallery'>
+                  گالری
+                </Link>
+              </li>
+          ) : null}
+
         </ul>
       </nav>
   )
 }
 
-export default TopNav
+const mapStateToProps = state => ({
+  isAuthenticated: state.user.isAuthenticated
+})
+
+export default connect(mapStateToProps, null)(TopNav)

@@ -1,8 +1,7 @@
 const initialState = {
   isAuthenticated: false,
   user: null,
-  password: null,
-  auth: null
+  auth: null,
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -13,15 +12,12 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         user: payload.user,
-        password: payload.password
       };
     case 'LOGIN_FAIL':
       return {
         ...state,
         isAuthenticated: false,
         user: null,
-        password: null,
-        token: null
       }
     case 'USER_LOADED_SUCCESS':
       return {
@@ -33,14 +29,12 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: null,
-        token: null
       };
     case 'AUTHENTICATED_FAIL':
       return {
         ...state,
         isAuthenticated: false,
         user: null,
-        token: null
       }
     case 'AUTHENTICATED_SUCCESS':
       return {
@@ -52,7 +46,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         user: null,
-        token: null
       }
     case 'LOGOUT_FAIL':
       return {

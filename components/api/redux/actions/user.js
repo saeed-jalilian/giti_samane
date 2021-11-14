@@ -18,7 +18,7 @@ export const loginUser = user => async dispatch => {
       payload: body
     })
     dispatch({
-      type: 'SET_TOKEN',
+      type: 'SET_AUTH',
       payload: decodedBtoa
     })
     // dispatch(loadUser())
@@ -35,7 +35,7 @@ export const loginUser = user => async dispatch => {
 export const registerUser = user => async dispatch => {
   dispatch(showLoading())
   try {
-    const res = await http.post(`${process.env.BackendApiUrl}/api/user/register`, user)
+    const res = await http.post(`${process.env.BackendApiUrl}/register`, user)
     message.success('ثبت نام با موفقیت انجام شد')
     dispatch({type: 'SIGNUP_SUCCESS'})
     return res

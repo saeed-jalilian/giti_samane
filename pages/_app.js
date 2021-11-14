@@ -1,5 +1,4 @@
 import {ConfigProvider} from 'antd'
-import Head from 'next/head'
 import {Provider} from 'react-redux'
 import {useStore} from '../components/api/redux/store'
 
@@ -15,11 +14,11 @@ function MyApp({Component, pageProps}) {
   const store = useStore(pageProps.initial)
 
   return (
-      <MainLayout>
-        <Provider store={store}>
+      <Provider store={store}>
+        <MainLayout>
           <Component {...pageProps} />
-        </Provider>
-      </MainLayout>
+        </MainLayout>
+      </Provider>
   )
 }
 
