@@ -23,7 +23,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
 
 
   const {data: albumData, mutate: albumMutate} = useSWR(
-      `${process.env.NextUrl}/api/album/${albumName}`,
+      `${process.env.NextUrl}/api/single-album/${albumName}`,
       fetcher,
       {fallbackData: initAlbum}
   )
