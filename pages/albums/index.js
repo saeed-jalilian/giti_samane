@@ -46,7 +46,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
 }
 
 export async function getServerSideProps(context) {
-  const galleriesUrl = `${process.env.NextUrl}/api/albums`
+  const galleriesUrl = `${process.env.BackendApiUrl}/albums`
   const cookies = cookie.parse(context.req.headers.cookie)
   const auth = cookies.main
 
