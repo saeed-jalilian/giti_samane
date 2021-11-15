@@ -47,7 +47,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
 export async function getServerSideProps(context) {
   const galleriesUrl = `${process.env.NextUrl}/api/albums`
 
-  const initGalleries = fetcher(galleriesUrl)
+  const initGalleries = await fetcher(galleriesUrl)
 
   return {
     props: {
