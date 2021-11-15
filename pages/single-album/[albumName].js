@@ -108,7 +108,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   useEffect(() => {
     const userAuthenticated = async () => {
       if (!isAuthenticated) {
-        await router.push(`${process.env.NextUrl}/login`)
+        await router.push(`${process.env.NextUrl}/user/login`)
       }
     }
     userAuthenticated()
