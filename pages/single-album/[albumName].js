@@ -80,31 +80,37 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
         <Title level={2} className='album-title'>
           {albumData.name}
         </Title>
-        <Row align='middle' justify='center'>
-          {picturesData.results.map(picture => (
-              <Col key={picture.id} span={8}>
-                <Card
-                    className='album-card'
-                    title={picture.title}
-                    cover={<CustomImage
-                        width={300}
-                        height={300}
-                        layout='fixed'
-                        src={picture.img}
-                        alt={picture.title}
-                    />}
-                    actions={[
-                      <IoPencilOutline key='edit'/>,
-                      <IoTrashOutline onClick={() => handlePictureDelete(picture.id)} key='delete'/>
-                    ]}
-                >
-                  <Meta description={picture.desc ?? ''}/>
-                </Card>
-              </Col>
-          ))}
-          <Tooltip title='افزودن تصویر'>
-            <IoAddOutline onClick={handleShowAddPicModal} size={24}/>
-          </Tooltip>
+        <Row align='middle' justify='space-between'>
+          <Col span={22}>
+            <Row align='middle' justify='center'>
+              {picturesData.results.map(picture => (
+                  <Col key={picture.id} span={8}>
+                    <Card
+                        className='album-card'
+                        title={picture.title}
+                        cover={<CustomImage
+                            width={300}
+                            height={300}
+                            layout='fixed'
+                            src={picture.img}
+                            alt={picture.title}
+                        />}
+                        actions={[
+                          <IoPencilOutline key='edit'/>,
+                          <IoTrashOutline onClick={() => handlePictureDelete(picture.id)} key='delete'/>
+                        ]}
+                    >
+                      <Meta description={picture.desc ?? ''}/>
+                    </Card>
+                  </Col>
+              ))}
+            </Row>
+          </Col>
+          <Col span={2}>
+            <Tooltip title='افزودن تصویر'>
+              <IoAddOutline onClick={handleShowAddPicModal} size={24}/>
+            </Tooltip>
+          </Col>
         </Row>
 
         <Modal
