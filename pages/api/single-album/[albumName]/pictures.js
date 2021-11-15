@@ -25,7 +25,7 @@ export default async (req, res) => {
       const imageFile = fs.readFileSync(files.img.filepath)
       formData.append('title', title, fields.title)
       formData.append('desc', fields.desc)
-      formData.append('img', imageFile, {filename: files.img.name, filepath: files.img.name})
+      formData.append('img', imageFile, {filename: files.img.name, filepath: files.img.filepath})
       const axiosConfig = {
         headers: {
           'Authorization': `Basic ${auth}`,
