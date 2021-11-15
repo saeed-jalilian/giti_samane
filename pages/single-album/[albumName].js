@@ -60,8 +60,8 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   const handleTitleEdit = async values => {
     dispatch(showLoading())
     try {
-      const {title} = values
-      const body = {title}
+      const {name} = values
+      const body = {name}
       await http.patch(`${process.env.NextUrl}/single-album/${albumName}`, body)
       await albumMutate()
       setIsTitleModalVisible(false)
@@ -223,7 +223,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
               onFinish={handleTitleEdit}
           >
             <Form.Item
-                name='title'
+                name='name'
                 label='عنوان'
                 rules={[
                   {
