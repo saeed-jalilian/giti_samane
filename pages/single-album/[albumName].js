@@ -213,6 +213,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
             onCancel={handleCancelTitleModal}
             onOk={() => titleForm.submit()}
             className='modal-container'
+            visible={isTitleModalVisible}
         >
           <Form
               className='modal-form'
