@@ -30,10 +30,13 @@ const LoginPage = ({loginUser, isAuthenticated}) => {
   }
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push(`${process.env.NextUrl}`)
+    const userAuthenticated = async () => {
+      if (isAuthenticated) {
+        await router.push(`${process.env.NextUrl}`)
+      }
     }
-  })
+    userAuthenticated()
+  }, [isAuthenticated, router])
 
   return (
       <div className='user-form-container'>
