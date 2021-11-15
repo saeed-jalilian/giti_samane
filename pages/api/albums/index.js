@@ -4,7 +4,6 @@ import {getWithHeaders, postWithHeaders} from "../../../components/api/authorize
 export default async (req, res) => {
   const cookies = cookie.parse(req.headers.cookie ?? '')
   const auth = cookies.auth
-  console.log(auth)
   if (req.method === 'GET') {
     try {
       const resApi = await getWithHeaders(`${process.env.BackendApiUrl}/albums`, auth)
