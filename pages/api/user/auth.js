@@ -7,7 +7,7 @@ export default async (req, res) => {
         cookie.serialize(
             'auth', req.body, {
               httpOnly: true,
-              secure: true,
+              secure: false,
               maxAge: 60 * 60 * 24 * 30,
               sameSite: 'strict',
               path: `/api/`

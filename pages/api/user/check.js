@@ -15,7 +15,7 @@ export default async (req, res) => {
     if (auth) {
       try {
         const decodedAuth = atob(auth)
-        const user = _.split(decodedAuth, ':')[0]
+        const user = decodedAuth.split(':')[0]
         await http.post(`${process.env.BackendApiUrl}/login`, config)
         return res.status(200).send({auth, user})
       } catch (e) {
