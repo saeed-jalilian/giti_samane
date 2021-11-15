@@ -50,7 +50,7 @@ export const registerUser = user => async dispatch => {
   }
 }
 
-export const checkAuthenticated = async dispatch => {
+export const checkAuthenticated = () => async dispatch => {
   dispatch(showLoading())
   try {
     const {data} = await http.get(`${process.env.NextUrl}/user/check`)
