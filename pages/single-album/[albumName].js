@@ -17,8 +17,10 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   const dispatch = useDispatch()
 
   const [pictureForm] = Form.useForm()
+  const [titleForm] = Form.useForm()
 
   const [isAddPicModalVisible, setIsAddPicModalVisible] = useState(false)
+  const [isTitleModalVisible, setIsTitleModalVisible] = useState(false)
   const [pictureToAdd, setPictureToAdd] = useState(null)
 
 
@@ -40,6 +42,30 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
       await http.delete(`${process.env.NextUrl}/api/picture/${pictureId}`)
       await picturesMutate()
       message.success('عکس با موفقیت حذف شد')
+    } catch (e) {
+      message.error('متاسفانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
+    } finally {
+      dispatch(hideLoading())
+    }
+  }
+
+  const handleShowTitleModal = () => {
+    setIsTitleModalVisible(true)
+  }
+
+  const handleCancelTitleModal = () => {
+    setIsTitleModalVisible(false)
+  }
+
+  const handleTitleEdit = async values => {
+    dispatch(showLoading())
+    try {
+      const {title} = values
+      const body = {title}
+      await http.patch(`${process.env.NextUrl}/single-album/${albumName}`, body)
+      await albumMutate()
+      setIsTitleModalVisible(false)
+      message.success('عنوان آلبوم با موفقیت تغییر پیدا کرد')
     } catch (e) {
       message.error('متاسفانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
     } finally {
@@ -77,9 +103,11 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
 
   return (
       <Fragment>
-        <Title level={2} className='album-title'>
-          {albumData.name}
-        </Title>
+        <Tooltip title='ویرایش عنوان'>
+          <Title onClick={handleShowTitleModal} level={2} className='album-title'>
+            {albumData.name}
+          </Title>
+        </Tooltip>
         <Row align='middle' justify='space-between'>
           <Col span={22}>
             <Row align='middle' justify='center'>
@@ -174,6 +202,37 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
                   type='file'
                   accept='image/*'
                   onChange={e => setPictureToAdd(e.target.files[0])}
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
+
+        <Modal
+            title='تغییر عنوان آلبوم'
+            okText='ثبت'
+            onCancel={handleCancelTitleModal}
+            onOk={() => titleForm.submit()}
+            className='modal-container'
+        >
+          <Form
+              className='modal-form'
+              form={titleForm}
+              labelCol={5}
+              wrapperCol={19}
+              onFinish={handleTitleEdit}
+          >
+            <Form.Item
+                name='title'
+                label='عنوان'
+                rules={[
+                  {
+                    required: true,
+                    message: 'عنوان محصول باید وارد شود'
+                  }
+                ]}
+            >
+              <Input
+                  placeholder='عنوان جدید را وارد کنید'
               />
             </Form.Item>
           </Form>

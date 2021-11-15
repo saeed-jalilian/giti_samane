@@ -25,7 +25,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
   const handleDeleteAlbum = async albumName => {
     dispatch(showLoading())
     try {
-      await http.delete(`${process.env.NextUrl}/api/album/${albumName}`)
+      await http.delete(`${process.env.NextUrl}/api/single-album/${albumName}`)
       await mutate()
       message.success('آلبوم با موفقیت حذف شد')
     } catch (e) {
