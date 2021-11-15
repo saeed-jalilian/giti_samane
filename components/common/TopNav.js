@@ -56,7 +56,7 @@ const TopNav = ({isAuthenticated}) => {
 
             {isAuthenticated ? (
                 <li>
-                  <Link href='/gallery'>
+                  <Link href='/albums'>
                     گالری
                   </Link>
                 </li>
@@ -110,7 +110,7 @@ const TopNav = ({isAuthenticated}) => {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.isAuthenticated
+  isAuthenticated: state.user.isAuthenticated,
 })
 
 export default connect(mapStateToProps, null)(TopNav)
