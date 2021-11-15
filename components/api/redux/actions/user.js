@@ -49,3 +49,20 @@ export const registerUser = user => async dispatch => {
     dispatch(hideLoading())
   }
 }
+
+export const checkAuthenticated = async dispatch => {
+  dispatch(showLoading())
+  try {
+    const {data} = await http.get(`${process.env.NextUrl}/user/check`)
+    dispatch({
+      type: 'AUTHENTICATED_SUCCESS',
+      payload: data
+    })
+  } catch (e) {
+    dispatch({
+      type: 'AUTHENTICATED_FAIL'
+    })
+  } finally {
+    dispatch(hideLoading())
+  }
+}

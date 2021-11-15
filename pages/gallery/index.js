@@ -16,11 +16,12 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      initGalleries
+      initGalleries,
+      fallback: {
+        galleriesUrl: initGalleries
+      }
     },
-    fallback: {
-      galleriesUrl: initGalleries
-    }
+
   }
 }
 

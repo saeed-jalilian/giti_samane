@@ -15,7 +15,7 @@ const TopNav = ({isAuthenticated}) => {
   const dispatch = useDispatch()
 
 
-  const [isAlbumModalVisible, setIsAlbumModalVisible] = useState(true)
+  const [isAlbumModalVisible, setIsAlbumModalVisible] = useState(false)
 
 
   const handleModalCancel = () => {
