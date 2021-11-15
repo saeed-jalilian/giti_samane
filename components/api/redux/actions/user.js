@@ -66,3 +66,15 @@ export const checkAuthenticated = () => async dispatch => {
     dispatch(hideLoading())
   }
 }
+
+export const logoutUser = () => async dispatch => {
+  dispatch(showLoading())
+  try {
+    await http.get(`${process.env.NextUrl}/api/user/logout`)
+    message.success('خروج از حساب کاربری با موفقیت انجام شد')
+  } catch (e) {
+    message.error('متاسفانه با خطایی مواجه شدیم،‌لطفا مجددا تلاش کنید')
+  } finally {
+    dispatch(hideLoading())
+  }
+}

@@ -20,6 +20,6 @@ export default async (req, res) => {
       return res.status(e.response.status).send(e.response.data)
     }
   } else {
-    res.setHeader('Allow', ['GET'])
+    res.setHeader('Allow', ['GET', 'POST'])
   }
 }

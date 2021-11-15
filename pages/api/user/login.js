@@ -18,6 +18,15 @@ export default async (req, res) => {
             sameSite: 'strict',
             path: `/api/`
           }
+      ),
+      cookie.serialize(
+          'main', codedAuth, {
+            httpOnly: false,
+            secure: false,
+            maxAge: 60 * 60 * 24 * 30,
+            sameSite: 'strict',
+            path: '/'
+          }
       )
     ])
 

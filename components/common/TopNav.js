@@ -6,7 +6,7 @@ import {Form} from 'antd'
 import {useDispatch} from "react-redux";
 
 import http from "../api/axiosConfig";
-import {showLoading} from "react-redux-loading-bar";
+import {logoutUser} from "../api/redux/actions/user";
 
 
 const TopNav = ({isAuthenticated}) => {
@@ -23,7 +23,6 @@ const TopNav = ({isAuthenticated}) => {
   }
 
   const handleAlbumAdd = async values => {
-    dispatch(showLoading())
     const {name} = values
     const body = {name}
     try {
@@ -33,6 +32,10 @@ const TopNav = ({isAuthenticated}) => {
     } catch (e) {
       message.error('متاسففانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
     }
+  }
+
+  const handleLogout = async () => {
+    await dispatch(logoutUser())
   }
 
 
@@ -55,11 +58,19 @@ const TopNav = ({isAuthenticated}) => {
             ) : null}
 
             {isAuthenticated ? (
-                <li>
-                  <Link href='/albums'>
-                    گالری
-                  </Link>
-                </li>
+                <Fragment>
+                  <li>
+                    <Link href='/albums'>
+                      گالری
+                    </Link>
+                  </li>
+
+                  <li>
+                    <a onClick={handleLogout}>
+                      خروج
+                    </a>
+                  </li>
+                </Fragment>
             ) : null}
 
             {isAuthenticated ? (
