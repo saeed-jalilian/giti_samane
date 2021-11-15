@@ -1,9 +1,10 @@
 import {useEffect} from "react";
-import {connect} from "react-redux";
 import Head from 'next/head'
 import {message} from "antd";
 import {LoadingBar} from "react-redux-loading-bar";
 import {useDispatch} from "react-redux";
+import {SWRConfig} from "swr";
+import {useRouter} from "next/router";
 
 import {checkAuthenticated} from "../api/redux/actions/user";
 import TopNav from "../common/TopNav";
@@ -12,27 +13,38 @@ const MainLayout = ({children}) => {
 
   message.config({rtl: true})
   const dispatch = useDispatch()
+  const router = useRouter()
 
   useEffect(() => {
     dispatch(checkAuthenticated())
   }, [dispatch])
 
   return (
-      <div className='container'>
-        <Head>
-          <title>
-            خانه
-          </title>
-        </Head>
+      <SWRConfig value={{
+        onError: async (err, key) => {
+          if (err.response.status === 403) {
+            await router.push('/403')
+          } else if (err.response.status === 404) {
+            await router.push('/404')
+          } else if (err.response.status === 500) {
+            await router.push('/500')
+          }
+        }
+      }}>
+        <div className='container'>
+          <Head>
+            <title>
+              خانه
+            </title>
+          </Head>
 
-        <LoadingBar/>
+          <LoadingBar/>
 
-        <TopNav/>
+          <TopNav/>
 
-
-        {children}
-
-      </div>
+          {children}
+        </div>
+      </SWRConfig>
   )
 }
 
