@@ -31,15 +31,7 @@ const MainLayout = ({children}) => {
             await router.push('/500')
           }
         },
-        fetcher: fetcher.catch(error => {
-          if (error.response.status === 403) {
-            router.push('/403')
-          } else if (error.response.status === 404) {
-            router.push('/404')
-          } else {
-            router.push('/500')
-          }
-        })
+        fetcher: fetcher
       }}>
         <div className='container'>
           <Head>
