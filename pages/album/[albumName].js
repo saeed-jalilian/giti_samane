@@ -63,7 +63,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
                       />}
                       actions={[
                         <IoPencilOutline key='edit'/>,
-                        <IoTrashOutline onClick={()=> handlePictureDelete(picture.id)} key='delete'/>
+                        <IoTrashOutline onClick={() => handlePictureDelete(picture.id)} key='delete'/>
                       ]}
                   >
                     <Meta description={picture.desc ?? ''}/>
