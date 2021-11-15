@@ -1,8 +1,8 @@
-import {Fragment} from "react";
+import {Fragment, useState} from "react";
 import cookie from "cookie";
 import useSWR from "swr";
-import {Typography, Row, Col, Card, message} from "antd";
-import {IoPencilOutline, IoTrashOutline} from "react-icons/io5";
+import {Typography, Row, Col, Card, message, Tooltip, Modal, Form, Input} from "antd";
+import {IoPencilOutline, IoTrashOutline, IoAddOutline} from "react-icons/io5";
 import {useDispatch} from "react-redux";
 
 import {hideLoading, showLoading} from "react-redux-loading-bar";
@@ -16,8 +16,13 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   const {Meta} = Card
   const dispatch = useDispatch()
 
+  const [pictureForm] = Form.useForm()
 
-  const {data: albumData} = useSWR(
+  const [isAddPicModalVisible, setIsAddPicModalVisible] = useState(false)
+  const [pictureToAdd, setPictureToAdd] = useState(null)
+
+
+  const {data: albumData, mutate: albumMutate} = useSWR(
       `${process.env.NextUrl}/api/album/${albumName}`,
       fetcher,
       {fallbackData: initAlbum}
@@ -35,6 +40,34 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
       await http.delete(`${process.env.NextUrl}/api/picture/${pictureId}`)
       await picturesMutate()
       message.success('عکس با موفقیت حذف شد')
+    } catch (e) {
+      message.error('متاسفانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
+    } finally {
+      dispatch(hideLoading())
+    }
+  }
+
+  const handleShowAddPicModal = () => {
+    setIsAddPicModalVisible(true)
+  }
+
+  const handleCancelPicModal = () => {
+    setIsAddPicModalVisible(false)
+  }
+
+  const handleAddPicture = async values => {
+    dispatch(showLoading())
+    const {title, desc} = values
+    const form = new FormData()
+    try {
+      form.append('title', title)
+      form.append('desc', desc)
+      form.append('img', pictureToAdd, pictureToAdd.name)
+      await http.post(`${process.env.NextUrl}/api/album/${albumName}/pictures`, form)
+      await picturesMutate()
+      await albumMutate()
+      setIsAddPicModalVisible(false)
+      message.success('تصویر با موفقیت اضافه شد')
     } catch (e) {
       message.error('متاسفانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
     } finally {
@@ -69,7 +102,70 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
                 </Card>
               </Col>
           ))}
+          <Tooltip title='افزودن تصویر'>
+            <IoAddOutline onClick={handleShowAddPicModal} size={24}/>
+          </Tooltip>
         </Row>
+
+        <Modal
+            title='افزودن تصویر'
+            visible={isAddPicModalVisible}
+            okText='ثبت'
+            onCancel={handleCancelPicModal}
+            className='modal-container'
+        >
+          <Form
+              form={pictureForm}
+              labelCol={5}
+              wrapperCol={19}
+              onFinish={handleAddPicture}
+          >
+            <Form.Item
+                name='title'
+                label='عنوان'
+                rules={[
+                  {
+                    required: true,
+                    message: 'عنوان تصویر باید وارد شود'
+                  }
+                ]}
+            >
+              <Input
+                  placeholder='عنوان تصویر را وارد کنید'
+              />
+            </Form.Item>
+            <Form.Item
+                name='desc'
+                label='شرح'
+                rules={[
+                  {
+                    required: true,
+                    message: 'شرح تصویر باید وارد شود'
+                  }
+                ]}
+            >
+              <Input
+                  placeholder='شرح تصویر را وارد کنید'
+              />
+            </Form.Item>
+            <Form.Item
+                name='img'
+                label='تصویر'
+                rules={[
+                  {
+                    required: true,
+                    message: 'تصویر باید آپلود شود'
+                  }
+                ]}
+            >
+              <Input
+                  type='file'
+                  accept='image/*'
+                  onChange={e => setPictureToAdd(e.target.files[0])}
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
 
       </Fragment>
   )
