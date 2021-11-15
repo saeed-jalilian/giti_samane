@@ -35,6 +35,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         user: null,
+        auth: null
       }
     case 'AUTHENTICATED_SUCCESS':
       return {

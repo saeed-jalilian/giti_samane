@@ -4,6 +4,7 @@ import {Fragment, useState} from "react";
 import {Input, message, Modal} from "antd";
 import {Form} from 'antd'
 import {useDispatch} from "react-redux";
+import {checkAuthenticated} from "../api/redux/actions/user";
 
 import http from "../api/axiosConfig";
 import {logoutUser} from "../api/redux/actions/user";
@@ -36,6 +37,7 @@ const TopNav = ({isAuthenticated}) => {
 
   const handleLogout = async () => {
     await dispatch(logoutUser())
+    await dispatch(checkAuthenticated())
   }
 
 
