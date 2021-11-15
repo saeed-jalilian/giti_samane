@@ -70,7 +70,7 @@ const TopNav = ({isAuthenticated}) => {
             {isAuthenticated ? (
                 <Fragment>
                   <li>
-                    <a>
+                    <a onClick={() => setIsAlbumModalVisible(true)}>
                       ثبت آلبوم جدید
                     </a>
                   </li>

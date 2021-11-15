@@ -9,3 +9,9 @@
 .album-card {
   width: 300px;
 }
+
+.add-pic-icon {
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -108,7 +108,11 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
           </Col>
           <Col span={2}>
             <Tooltip title='افزودن تصویر'>
-              <IoAddOutline onClick={handleShowAddPicModal} size={24}/>
+              <IoAddOutline
+                  className='add-pic-icon'
+                  onClick={handleShowAddPicModal}
+                  size={24}
+              />
             </Tooltip>
           </Col>
         </Row>
