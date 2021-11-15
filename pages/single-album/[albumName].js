@@ -106,10 +106,13 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   }
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push(`${process.env.NextUrl}/login`)
+    const userAuthenticated = async () => {
+      if (!isAuthenticated) {
+        await router.push(`${process.env.NextUrl}/login`)
+      }
     }
-  })
+    userAuthenticated()
+  }, [isAuthenticated, router])
 
   return (
       <Fragment>

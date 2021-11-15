@@ -40,9 +40,12 @@ const GalleryPage = ({initGalleries, fallback}) => {
   }
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push(`${process.env.NextUrl}/login`)
+    const userAuthenticated = async () => {
+      if (!isAuthenticated) {
+        await router.push(`${process.env.NextUrl}/login`)
+      }
     }
+    userAuthenticated()
   }, [isAuthenticated, router])
 
   return (
