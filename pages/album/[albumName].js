@@ -5,10 +5,10 @@ import {Typography, Row, Col, Card, message} from "antd";
 import {IoPencilOutline, IoTrashOutline} from "react-icons/io5";
 import {useDispatch} from "react-redux";
 
-import {fetcher} from "../../../components/api/fetcher";
-import CustomImage from "../../../components/common/CustomImage";
 import {hideLoading, showLoading} from "react-redux-loading-bar";
-import http from "../../../components/api/axiosConfig";
+import {fetcher} from "../../components/api/fetcher";
+import http from "../../components/api/axiosConfig";
+import CustomImage from "../../components/common/CustomImage";
 
 const AlbumPage = ({initAlbum, initPictures, albumName}) => {
 
@@ -79,8 +79,8 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
 
 export async function getServerSideProps(context) {
   const cookies = cookie.parse(context.req.headers.cookie ?? '')
-  const {albumName} = context.params
   const auth = cookies.main
+  const {albumName} = context.params
   const initAlbum = await fetcher(`${process.env.BackendApiUrl}/album/${albumName}`, auth)
   const initPictures = await fetcher(`${process.env.BackendApiUrl}/album/${albumName}/pictures`, auth)
   return {
