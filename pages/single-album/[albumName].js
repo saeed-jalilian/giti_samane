@@ -1,9 +1,9 @@
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import cookie from "cookie";
 import useSWR from "swr";
 import {Typography, Row, Col, Card, message, Tooltip, Modal, Form, Input} from "antd";
 import {IoPencilOutline, IoTrashOutline, IoAddOutline} from "react-icons/io5";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useRouter} from "next/router";
 
 import {hideLoading, showLoading} from "react-redux-loading-bar";
@@ -17,6 +17,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   const {Meta} = Card
   const dispatch = useDispatch()
   const router = useRouter()
+  const isAuthenticated = useSelector(state => state.user.isAuthenticated)
 
   const [pictureForm] = Form.useForm()
   const [titleForm] = Form.useForm()
@@ -103,6 +104,12 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
       dispatch(hideLoading())
     }
   }
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push(`${process.env.NextUrl}/login`)
+    }
+  })
 
   return (
       <Fragment>

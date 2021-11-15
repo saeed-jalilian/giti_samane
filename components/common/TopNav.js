@@ -4,8 +4,9 @@ import {Fragment, useState} from "react";
 import {Input, message, Modal} from "antd";
 import {Form} from 'antd'
 import {useDispatch} from "react-redux";
-import {checkAuthenticated} from "../api/redux/actions/user";
+import {useSWRConfig} from "swr";
 
+import {checkAuthenticated} from "../api/redux/actions/user";
 import http from "../api/axiosConfig";
 import {logoutUser} from "../api/redux/actions/user";
 
@@ -14,6 +15,7 @@ const TopNav = ({isAuthenticated}) => {
 
   const [albumForm] = Form.useForm()
   const dispatch = useDispatch()
+  const {mutate} = useSWRConfig()
 
 
   const [isAlbumModalVisible, setIsAlbumModalVisible] = useState(false)
@@ -29,6 +31,7 @@ const TopNav = ({isAuthenticated}) => {
     try {
       await http.post(`${process.env.NextUrl}/api/albums`, body)
       handleModalCancel()
+      await mutate(`${process.env.NextUrl}/api/albums`)
       message.success('آلبوم با موفقیت اضافه شد')
     } catch (e) {
       message.error('متاسففانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')

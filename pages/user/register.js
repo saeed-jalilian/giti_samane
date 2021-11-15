@@ -3,8 +3,9 @@ import {Button, Form, Input, message, Typography} from "antd";
 import {useRouter} from "next/router";
 
 import {registerUser} from "../../components/api/redux/actions/user";
+import {useEffect} from "react";
 
-const RegisterPage = ({registerUser}) => {
+const RegisterPage = ({registerUser, isAuthenticated}) => {
   const [registerForm] = Form.useForm()
   const router = useRouter()
 
@@ -23,6 +24,12 @@ const RegisterPage = ({registerUser}) => {
       message.error('رمزهای عبور وارد شده باید یکسان باشند')
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push(`${process.env.NextUrl}`)
+    }
+  })
 
   return (
       <div className='user-form-container'>
@@ -99,6 +106,8 @@ const RegisterPage = ({registerUser}) => {
   )
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  isAuthenticated: state.user.isAuthenticated
+})
 
 export default connect(mapStateToProps, {registerUser})(RegisterPage)

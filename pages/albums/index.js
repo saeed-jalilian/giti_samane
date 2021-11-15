@@ -6,6 +6,8 @@ import {useRouter} from "next/router";
 import {IoPencilOutline, IoTrashOutline} from "react-icons/io5";
 import {useDispatch} from "react-redux";
 import {hideLoading, showLoading} from "react-redux-loading-bar";
+import {useEffect} from "react";
+import {useSelector} from "react-redux";
 
 import CustomImage from "../../components/common/CustomImage";
 import FullscreenSpin from "../../components/common/FullscreenSpin";
@@ -15,6 +17,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
 
   const router = useRouter()
   const dispatch = useDispatch()
+  const isAuthenticated = useSelector(state => state.user.isAuthenticated)
 
   const {data: albumsData, mutate} = useSWR(
       `${process.env.NextUrl}/api/albums`,
@@ -34,6 +37,12 @@ const GalleryPage = ({initGalleries, fallback}) => {
       dispatch(hideLoading())
     }
   }
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push(`${process.env.NextUrl}/login`)
+    }
+  }, [isAuthenticated,router])
 
   return (
       <SWRConfig value={{fallback}}>
@@ -64,7 +73,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
                         />
                     )}
                     actions={[
-                      <IoTrashOutline onClick={() => handleDeleteAlbum(album.name.replace(' ','%20'))} key='delete'/>,
+                      <IoTrashOutline onClick={() => handleDeleteAlbum(album.name.replace(' ', '%20'))} key='delete'/>,
                     ]}
                 />
               </Col>

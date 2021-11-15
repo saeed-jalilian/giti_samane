@@ -6,8 +6,9 @@ import Link from 'next/link'
 import {useRouter} from "next/router";
 
 import {loginUser} from "../../components/api/redux/actions/user";
+import {useEffect} from "react";
 
-const LoginPage = ({loginUser}) => {
+const LoginPage = ({loginUser, isAuthenticated}) => {
   const [loginForm] = Form.useForm()
   const dispatch = useDispatch()
   const router = useRouter()
@@ -27,6 +28,12 @@ const LoginPage = ({loginUser}) => {
       dispatch(hideLoading())
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push(`${process.env.NextUrl}`)
+    }
+  })
 
   return (
       <div className='user-form-container'>
@@ -102,6 +109,8 @@ const LoginPage = ({loginUser}) => {
   )
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  isAuthenticated: state.user.isAuthenticated
+})
 
 export default connect(mapStateToProps, {loginUser})(LoginPage)
