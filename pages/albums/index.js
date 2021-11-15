@@ -30,6 +30,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
     try {
       await http.delete(`${process.env.NextUrl}/api/single-album/${albumName}`)
       await mutate()
+      await router.push(`${process.env.NextUrl}/albums`)
       message.success('آلبوم با موفقیت حذف شد')
     } catch (e) {
       message.error('متاسفانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
@@ -42,7 +43,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
     if (!isAuthenticated) {
       router.push(`${process.env.NextUrl}/login`)
     }
-  }, [isAuthenticated,router])
+  }, [isAuthenticated, router])
 
   return (
       <SWRConfig value={{fallback}}>
