@@ -16,7 +16,7 @@ const MainLayout = ({children, checkAuthenticated}) => {
       await dispatch(checkAuthenticated())
     }
     authenticate()
-  }, [])
+  }, [checkAuthenticated])
 
   return (
       <div className='container'>
