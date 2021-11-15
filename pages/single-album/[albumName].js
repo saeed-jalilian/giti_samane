@@ -4,6 +4,7 @@ import useSWR from "swr";
 import {Typography, Row, Col, Card, message, Tooltip, Modal, Form, Input} from "antd";
 import {IoPencilOutline, IoTrashOutline, IoAddOutline} from "react-icons/io5";
 import {useDispatch} from "react-redux";
+import {useRouter} from "next/router";
 
 import {hideLoading, showLoading} from "react-redux-loading-bar";
 import {fetcher} from "../../components/api/fetcher";
@@ -15,6 +16,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   const {Text, Title} = Typography
   const {Meta} = Card
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const [pictureForm] = Form.useForm()
   const [titleForm] = Form.useForm()
@@ -64,6 +66,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
       const body = {name}
       await http.patch(`${process.env.NextUrl}/api/single-album/${albumName}`, body)
       await albumMutate()
+      await router.push(`${process.env.NextUrl}/single-album/${name.replace(' ', '%20')}`)
       setIsTitleModalVisible(false)
       message.success('عنوان آلبوم با موفقیت تغییر پیدا کرد')
     } catch (e) {
