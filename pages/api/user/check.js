@@ -11,15 +11,13 @@ export default async (req, res) => {
         'Authorization': `Basic ${auth}`
       }
     }
-    if (auth) {
-      try {
-        const decodedAuth = atob(auth)
-        const user = decodedAuth.split(':')[0]
-        await http.post(`${process.env.BackendApiUrl}/login`, config)
-        return res.status(200).send({auth, user})
-      } catch (e) {
-        return res.status(e.response.status).send(e.response.data)
-      }
+    try {
+      const decodedAuth = atob(auth)
+      const user = decodedAuth.split(':')[0]
+      await http.post(`${process.env.BackendApiUrl}/login`, config)
+      res.status(200).send({auth, user})
+    } catch (e) {
+      res.status(e.response.status).send(e.response.data)
     }
   } else {
     res.setHeader('Allow', ['GET'])
