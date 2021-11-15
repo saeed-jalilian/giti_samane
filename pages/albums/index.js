@@ -1,6 +1,7 @@
 import {fetcher} from "../../components/api/fetcher";
 import useSWR, {SWRConfig} from "swr";
 import {Card} from "antd";
+import cookie from "cookie";
 
 import CustomImage from "../../components/common/CustomImage";
 import FullscreenSpin from "../../components/common/FullscreenSpin";
@@ -46,7 +47,8 @@ const GalleryPage = ({initGalleries, fallback}) => {
 
 export async function getServerSideProps(context) {
   const galleriesUrl = `${process.env.NextUrl}/api/albums`
-  const auth = context.req.cookies.auth
+  const cookies = cookie.parse(context.req.headers.cookie)
+  const auth = cookies.main
 
   const initGalleries = await fetcher(galleriesUrl, auth)
 
