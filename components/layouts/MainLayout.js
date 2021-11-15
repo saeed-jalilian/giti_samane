@@ -12,7 +12,7 @@ const MainLayout = ({children, checkAuthenticated}) => {
   message.config({rtl: true})
 
   useEffect(() => {
-    const authenticate = async dispatch => {
+    const authenticate = () => async dispatch => {
       await dispatch(checkAuthenticated())
     }
     authenticate()
