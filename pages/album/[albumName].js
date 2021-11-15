@@ -18,13 +18,13 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
 
 
   const {data: albumData} = useSWR(
-      `${process.env.NextUrl}/album/${albumName}`,
+      `${process.env.NextUrl}/api/album/${albumName}`,
       fetcher,
       {fallbackData: initAlbum}
   )
 
   const {data: picturesData, mutate: picturesMutate} = useSWR(
-      `${process.env.NextUrl}/album/${albumName}/pictures`,
+      `${process.env.NextUrl}/api/album/${albumName}/pictures`,
       fetcher,
       {fallbackData: initPictures}
   )
@@ -32,7 +32,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   const handlePictureDelete = async pictureId => {
     dispatch(showLoading())
     try {
-      await http.delete(`${process.env.NextUrl}/picture/${pictureId}`)
+      await http.delete(`${process.env.NextUrl}/api/picture/${pictureId}`)
       await picturesMutate()
       message.success('عکس با موفقیت حذف شد')
     } catch (e) {
