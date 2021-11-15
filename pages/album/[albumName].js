@@ -6,7 +6,7 @@ const AlbumPage = ({initAlbum, albumName}) => {
   console.log(initAlbum)
   return (
       <Fragment>
-        this is ${albumName}
+        this is `${albumName}`
       </Fragment>
   )
 }

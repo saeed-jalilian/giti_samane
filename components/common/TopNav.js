@@ -60,11 +60,19 @@ const TopNav = ({isAuthenticated}) => {
             ) : null}
 
             {isAuthenticated ? (
+                <li>
+                  <Link href='/albums'>
+                    گالری
+                  </Link>
+                </li>
+            ) : null}
+
+            {isAuthenticated ? (
                 <Fragment>
                   <li>
-                    <Link href='/albums'>
-                      گالری
-                    </Link>
+                    <a>
+                      ثبت آلبوم جدید
+                    </a>
                   </li>
 
                   <li>
@@ -73,14 +81,6 @@ const TopNav = ({isAuthenticated}) => {
                     </a>
                   </li>
                 </Fragment>
-            ) : null}
-
-            {isAuthenticated ? (
-                <li>
-                  <a>
-                    ثبت آلبوم جدید
-                  </a>
-                </li>
             ) : null}
 
           </ul>

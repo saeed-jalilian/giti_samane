@@ -1,21 +1,39 @@
 import {fetcher} from "../../components/api/fetcher";
 import useSWR, {SWRConfig} from "swr";
-import {Card, Row, Col} from "antd";
+import {Card, Row, Col, message} from "antd";
 import cookie from "cookie";
 import {useRouter} from "next/router";
+import {IoPencilOutline, IoTrashOutline} from "react-icons/io5";
+import {useDispatch} from "react-redux";
+import {hideLoading, showLoading} from "react-redux-loading-bar";
 
 import CustomImage from "../../components/common/CustomImage";
 import FullscreenSpin from "../../components/common/FullscreenSpin";
+import http from "../../components/api/axiosConfig";
 
 const GalleryPage = ({initGalleries, fallback}) => {
 
   const router = useRouter()
+  const dispatch = useDispatch()
 
-  const {data: albumsData} = useSWR(
+  const {data: albumsData, mutate} = useSWR(
       `${process.env.NextUrl}/api/albums`,
       fetcher,
       {fallbackData: initGalleries}
   )
+
+  const handleDeleteAlbum = async albumName => {
+    dispatch(showLoading())
+    try {
+      await http.delete(`${process.env.NextUrl}/api/album/${albumName}`)
+      await mutate()
+      message.success('آلبوم با موفقیت حذف شد')
+    } catch (e) {
+      message.error('متاسفانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
+    } finally {
+      dispatch(hideLoading())
+    }
+  }
 
   return (
       <SWRConfig value={{fallback}}>
@@ -45,10 +63,14 @@ const GalleryPage = ({initGalleries, fallback}) => {
                             alt={album.name}
                         />
                     )}
+                    actions={[
+                      <IoTrashOutline onClick={() => handleDeleteAlbum(album.name.replace(' ','%20'))} key='delete'/>,
+                    ]}
                 />
               </Col>
           )) : <FullscreenSpin/>}
         </Row>
+
       </SWRConfig>
   )
 }
