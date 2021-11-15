@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 
 import {checkAuthenticated} from "../api/redux/actions/user";
 import TopNav from "../common/TopNav";
+import {fetcher} from "../api/fetcher";
 
 const MainLayout = ({children}) => {
 
@@ -29,7 +30,16 @@ const MainLayout = ({children}) => {
           } else if (err.response.status === 500) {
             await router.push('/500')
           }
-        }
+        },
+        fetcher: fetcher.catch(error => {
+          if (error.response.status === 403) {
+            router.push('/403')
+          } else if (error.response.status === 404) {
+            router.push('/404')
+          } else {
+            router.push('/500')
+          }
+        })
       }}>
         <div className='container'>
           <Head>

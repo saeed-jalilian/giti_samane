@@ -21,7 +21,6 @@ const GalleryPage = ({initGalleries, fallback}) => {
 
   const {data: albumsData, mutate} = useSWR(
       `${process.env.NextUrl}/api/albums`,
-      fetcher,
       {fallbackData: initGalleries}
   )
 
