@@ -94,6 +94,15 @@ export async function getServerSideProps(context) {
 
   const initGalleries = await fetcher(galleriesUrl, auth)
 
+  if (!initGalleries) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: true
+      }
+    }
+  }
+
   return {
     props: {
       initGalleries,
