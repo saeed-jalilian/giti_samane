@@ -46,8 +46,9 @@ const GalleryPage = ({initGalleries, fallback}) => {
 
 export async function getServerSideProps(context) {
   const galleriesUrl = `${process.env.NextUrl}/api/albums`
+  const auth = context.req.cookies.auth
 
-  const initGalleries = await fetcher(galleriesUrl)
+  const initGalleries = await fetcher(galleriesUrl, auth)
 
   return {
     props: {
