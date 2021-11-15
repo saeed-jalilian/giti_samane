@@ -113,6 +113,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
             okText='ثبت'
             onCancel={handleCancelPicModal}
             className='modal-container'
+            onOk={() => pictureForm.submit()}
         >
           <Form
               form={pictureForm}
