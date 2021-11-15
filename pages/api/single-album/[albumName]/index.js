@@ -7,7 +7,7 @@ export default async (req, res) => {
   const {albumName} = req.query
   if (req.method === 'GET') {
     try {
-      const resApi = getWithHeaders(`${process.env.BackendApiUrl}/album/${albumName}`, auth)
+      const resApi = await getWithHeaders(`${process.env.BackendApiUrl}/album/${albumName}`, auth)
       return res.status(resApi.status).send(resApi.data)
     } catch (e) {
       res.status(e.response.status).send(e.response.data)
