@@ -62,7 +62,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
     try {
       const {name} = values
       const body = {name}
-      await http.patch(`${process.env.NextUrl}/single-album/${albumName}`, body)
+      await http.patch(`${process.env.NextUrl}/api/single-album/${albumName}`, body)
       await albumMutate()
       setIsTitleModalVisible(false)
       message.success('عنوان آلبوم با موفقیت تغییر پیدا کرد')
