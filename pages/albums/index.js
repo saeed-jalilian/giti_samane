@@ -45,7 +45,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
                     title={album.name}
                     hoverable
                     headStyle={{textAlign: 'center'}}
-                    onClick={() => router.push(`${process.env.NextUrl}/album/${album.name.replace(' ', '%20')}`)}
+                    onClick={() => router.push(`${process.env.NextUrl}/single-album/${album.name.replace(' ', '%20')}`)}
                     cover={album.pictures ? (
                         <CustomImage
                             width={300}

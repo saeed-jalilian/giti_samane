@@ -50,25 +50,23 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
         <Row align='middle' justify='center'>
           {picturesData.results.map(picture => (
               <Col key={picture.id} span={6}>
-                <Fragment>
-                  <Card
-                      className='album-card'
-                      title={picture.title}
-                      cover={<CustomImage
-                          width={300}
-                          height={300}
-                          layout='fixed'
-                          src={picture.img}
-                          alt={picture.title}
-                      />}
-                      actions={[
-                        <IoPencilOutline key='edit'/>,
-                        <IoTrashOutline onClick={() => handlePictureDelete(picture.id)} key='delete'/>
-                      ]}
-                  >
-                    <Meta description={picture.desc ?? ''}/>
-                  </Card>
-                </Fragment>
+                <Card
+                    className='album-card'
+                    title={picture.title}
+                    cover={<CustomImage
+                        width={300}
+                        height={300}
+                        layout='fixed'
+                        src={picture.img}
+                        alt={picture.title}
+                    />}
+                    actions={[
+                      <IoPencilOutline key='edit'/>,
+                      <IoTrashOutline onClick={() => handlePictureDelete(picture.id)} key='delete'/>
+                    ]}
+                >
+                  <Meta description={picture.desc ?? ''}/>
+                </Card>
               </Col>
           ))}
         </Row>
