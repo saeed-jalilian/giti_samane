@@ -9,10 +9,13 @@ export default async (req, res) => {
   if (req.method === 'GET') {
     try {
       const decodedAuth = atob(auth)
-      const user = decodedAuth.split(':')[0]
-      const body = {username: user[0], password: user[1]}
+      const user = decodedAuth.split(':')
+      const username = user[0]
+      const password = user[1]
+
+      const body = {username, password}
       await http.post(`${process.env.BackendApiUrl}/login`, body)
-      res.status(200).send({auth, user})
+      res.status(200).send({auth, username})
     } catch (e) {
       res.status(e.response.status).send(e.response.data)
     }
