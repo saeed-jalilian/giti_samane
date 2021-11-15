@@ -14,11 +14,8 @@ const MainLayout = ({children}) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const authenticate = async () => {
-      await dispatch(checkAuthenticated())
-    }
-    authenticate()
-  }, [dispatch, checkAuthenticated])
+    dispatch(checkAuthenticated())
+  }, [dispatch])
 
   return (
       <div className='container'>

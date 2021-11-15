@@ -5,7 +5,7 @@ export default async (req, res) => {
     try {
       res.setHeader('Set-Cookie', [
         cookie.serialize(
-            'auth', req.body, {
+            'auth', req.body.auth, {
               httpOnly: true,
               secure: false,
               maxAge: 60 * 60 * 24 * 30,

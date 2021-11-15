@@ -1,5 +1,4 @@
 import cookie from "cookie"
-import _ from 'lodash'
 
 import http from "../../../components/api/axiosConfig";
 
