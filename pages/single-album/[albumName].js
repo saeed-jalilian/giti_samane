@@ -29,7 +29,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
   )
 
   const {data: picturesData, mutate: picturesMutate} = useSWR(
-      `${process.env.NextUrl}/api/album/${albumName}/pictures`,
+      `${process.env.NextUrl}/api/single-album/${albumName}/pictures`,
       fetcher,
       {fallbackData: initPictures}
   )
@@ -63,7 +63,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
       form.append('title', title)
       form.append('desc', desc)
       form.append('img', pictureToAdd, pictureToAdd.name)
-      await http.post(`${process.env.NextUrl}/api/album/${albumName}/pictures`, form)
+      await http.post(`${process.env.NextUrl}/api/single-album/${albumName}/pictures`, form)
       await picturesMutate()
       await albumMutate()
       setIsAddPicModalVisible(false)
@@ -119,6 +119,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
               labelCol={5}
               wrapperCol={19}
               onFinish={handleAddPicture}
+              className='modal-form'
           >
             <Form.Item
                 name='title'
