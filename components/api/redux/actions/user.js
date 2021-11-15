@@ -11,7 +11,7 @@ export const loginUser = user => async dispatch => {
     password: user.password
   }
   try {
-    await http.post(`${process.env.BackendApiUrl}/login`, body)
+    await http.post(`${process.env.BackendApiUrl}/api/user/login`, body)
     const decodedBtoa = btoa(`${body.username}:${body.password}`)
     await http.post(`${process.env.NextUrl}/api/user/auth`, {auth: decodedBtoa})
     dispatch({
