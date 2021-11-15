@@ -82,7 +82,7 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
         </Title>
         <Row align='middle' justify='center'>
           {picturesData.results.map(picture => (
-              <Col key={picture.id} span={6}>
+              <Col key={picture.id} span={4}>
                 <Card
                     className='album-card'
                     title={picture.title}
