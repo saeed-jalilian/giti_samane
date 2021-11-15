@@ -1,4 +1,5 @@
 import cookie from "cookie"
+import atob from 'atob'
 
 import http from "../../../components/api/axiosConfig";
 
