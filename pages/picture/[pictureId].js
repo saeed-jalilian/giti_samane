@@ -22,9 +22,12 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
   } = useSWR(`${process.env.NextUrl}/api/picture/${pictureId}`, {fallbackData: initPicture})
 
   const [pictureForm] = Form.useForm()
-  const [title, setTitle] = useState(false)
-  const [desc, setDesc] = useState(false)
-  const [img, setImg] = useState(false)
+  const [title, setTitle] = useState(pictureData.title)
+  const [titleChanged, setTitleChanged] = useState(false)
+  const [desc, setDesc] = useState(pictureData.desc)
+  const [descChanged, setDescChanged] = useState(false)
+  const [img, setImg] = useState(null)
+  const [imgChanged, setImgChanged] = useState(false)
 
   const isAuthenticated = useSelector(state => state.user.isAuthenticated)
 
@@ -32,13 +35,13 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
     dispatch(showLoading())
     let formData = new FormData()
     try {
-      if (title) {
+      if (titleChanged) {
         formData.append('title', title)
       }
-      if (desc) {
+      if (descChanged) {
         formData.append('desc', desc)
       }
-      if (img) {
+      if (imgChanged) {
         formData.append('img', img, img.name)
       }
       await http.patch(`${process.env.NextUrl}/picture/${pictureId}`, formData)
@@ -86,7 +89,10 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
                 ]}
             >
               <Input
-                  onChange={e => setTitle(e.target.value)}
+                  onChange={e => {
+                    setTitleChanged(true)
+                    setTitle(e.target.value)
+                  }}
                   placeholder='عنوان عکس را وارد کنید'
                   defaultValue={pictureData.title}
               />
@@ -103,9 +109,11 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
                 ]}
             >
               <Input
-                  onChange={e => setDesc(e.target.value)}
+                  onChange={e => {
+                    setDescChanged(true)
+                    setDesc(e.target.value)
+                  }}
                   placeholder='شرح عکس را وارد کنید'
-                  defaultValue={pictureData.desc}
               />
             </Form.Item>
 
@@ -122,7 +130,10 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
               <Input
                   type='file'
                   accept='image/*'
-                  onChange={e => setImg(e.target.files[0])}
+                  onChange={e => {
+                    setImgChanged(true)
+                    setImg(e.target.files[0])
+                  }}
               />
             </Form.Item>
 
