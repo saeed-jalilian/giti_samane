@@ -5,6 +5,7 @@ import {Input, message, Modal} from "antd";
 import {Form} from 'antd'
 import {useDispatch} from "react-redux";
 import {useSWRConfig} from "swr";
+import {useRouter} from "next/router";
 
 import {checkAuthenticated} from "../api/redux/actions/user";
 import http from "../api/axiosConfig";
@@ -16,6 +17,7 @@ const TopNav = ({isAuthenticated}) => {
   const [albumForm] = Form.useForm()
   const dispatch = useDispatch()
   const {mutate} = useSWRConfig()
+  const router = useRouter()
 
 
   const [isAlbumModalVisible, setIsAlbumModalVisible] = useState(false)
@@ -41,6 +43,7 @@ const TopNav = ({isAuthenticated}) => {
   const handleLogout = async () => {
     await dispatch(logoutUser())
     await dispatch(checkAuthenticated())
+    await router.push('/')
   }
 
 
