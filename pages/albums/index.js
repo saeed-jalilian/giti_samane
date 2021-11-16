@@ -57,7 +57,6 @@ const GalleryPage = ({initGalleries, fallback}) => {
                     title={album.name}
                     hoverable
                     headStyle={{textAlign: 'center'}}
-                    onClick={() => router.push(`${process.env.NextUrl}/single-album/${album.name.replace(' ', '%20')}`)}
                     cover={album.pictures[0] ? (
                         <CustomImage
                             width={300}
@@ -65,6 +64,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
                             layout='fixed'
                             src={album.pictures[0]}
                             alt={album.name}
+                            onClick={() => router.push(`${process.env.NextUrl}/single-album/${album.name.replace(' ', '%20')}`)}
                         />
                     ) : (
                         <CustomImage
@@ -73,6 +73,7 @@ const GalleryPage = ({initGalleries, fallback}) => {
                             layout='fixed'
                             src={'/img/no-image.png'}
                             alt={album.name}
+                            onClick={() => router.push(`${process.env.NextUrl}/single-album/${album.name.replace(' ', '%20')}`)}
                         />
                     )}
                     actions={[
