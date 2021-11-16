@@ -69,7 +69,7 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
   }, [isAuthenticated, router])
 
   return (
-      <Row align='middle' justify='space-between'>
+      <Row align='middle' justify='space-around'>
         <Col span={24}>
           <Title level={2} style={{textAlign: 'center'}}>
             {pictureData.title}
