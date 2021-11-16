@@ -48,7 +48,7 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
         if (imgChanged) {
           formData.append('img', img, img.name)
         }
-        await http.patch(`${process.env.NextUrl}/picture/${pictureId}`, formData)
+        await http.patch(`${process.env.NextUrl}/api/picture/${pictureId}`, formData)
         await mutate()
         message.success('تغییرات با موفقیت اعمال شد')
       } catch (e) {
