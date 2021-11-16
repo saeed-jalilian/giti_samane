@@ -260,14 +260,11 @@ export async function getServerSideProps(context) {
   const {albumName} = context.params
   const initAlbum = await fetcher(`${process.env.BackendApiUrl}/album/${albumName}`, auth)
   const initPictures = await fetcher(`${process.env.BackendApiUrl}/album/${albumName}/pictures`, auth)
+
   if (!auth) {
-    return {
-      redirect: {
-        destination: '/user/login',
-        permanent: false
-      }
-    }
+    return context.res.writeHead(302, {Location: '/login'}).end()
   }
+
   return {
     props: {
       initAlbum,
