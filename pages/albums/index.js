@@ -102,13 +102,14 @@ export async function getServerSideProps(context) {
           galleriesUrl: initGalleries
         }
       },
-
     }
   } catch (e) {
-    return {
-      redirect: {
-        destination: "/user/login",
-        permanent: false
+    if (e.response.status === 403) {
+      return {
+        redirect: {
+          destination: "/user/login",
+          permanent: false
+        }
       }
     }
   }

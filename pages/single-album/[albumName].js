@@ -135,7 +135,6 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
                             alt={picture.title}
                         />}
                         actions={[
-                          <IoPencilOutline key='edit'/>,
                           <IoTrashOutline onClick={() => handlePictureDelete(picture.id)} key='delete'/>
                         ]}
                     >
@@ -271,10 +270,12 @@ export async function getServerSideProps(context) {
       }
     }
   } catch (e) {
-    return {
-      redirect: {
-        destination: "/user/login",
-        permanent: false
+    if (e.response.status === 403) {
+      return {
+        redirect: {
+          destination: "/user/login",
+          permanent: false
+        }
       }
     }
   }
