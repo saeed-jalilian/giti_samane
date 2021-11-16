@@ -9,9 +9,6 @@ export default async (req, res) => {
       const resApi = await getWithHeaders(`${process.env.BackendApiUrl}/albums`, auth)
       return res.status(resApi.status).send(resApi.data)
     } catch (e) {
-      if (e.response.status === 403) {
-        res.redirect('308', '/403')
-      }
       res.status(e.response.status).send(e.response.data)
     }
   } else if (req.method === 'POST') {
