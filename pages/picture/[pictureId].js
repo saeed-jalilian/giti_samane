@@ -78,8 +78,8 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
         <Col span={8}>
           <Form
               form={pictureForm}
-              labelCol={6}
-              wrapperCol={18}
+              labelCol={8}
+              wrapperCol={16}
               className='modal-form'
               onFinish={handlePictureEdit}
           >
