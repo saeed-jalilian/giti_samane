@@ -153,7 +153,7 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
 }
 
 export async function getServerSideProps(context) {
-  const cookies = cookie.parse(context.req.headers.cookie)
+  const cookies = cookie.parse(context.req.headers.cookie ?? '')
   const auth = cookies.main
   const {pictureId} = context.params
 

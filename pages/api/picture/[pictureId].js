@@ -13,7 +13,7 @@ export default async (req, res) => {
 
   if (req.method === 'GET') {
     try {
-      const resApi = await getWithHeaders(`${process.env.BackendApiUrl}/picture/${pictureId}`)
+      const resApi = await getWithHeaders(`${process.env.BackendApiUrl}/picture/${pictureId}`, auth)
       return res.status(resApi.status).send(resApi.data)
     } catch (e) {
       return res.status(e.response.status).send(e.response.data)
@@ -55,8 +55,8 @@ export default async (req, res) => {
     })
 
   } else {
-    res.setHeader('Allow', ['DELETE'])
-    res.status(405).send(`Method ${req.method} not allowed`)
+    res.setHeader('Allow', ['DELETE', 'GET', 'PATCH'])
+    return res.status(405).send(`Method ${req.method} not allowed`)
   }
 }
 
