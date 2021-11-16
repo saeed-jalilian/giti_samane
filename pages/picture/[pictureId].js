@@ -33,24 +33,29 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
 
   const handlePictureEdit = async () => {
     dispatch(showLoading())
-    let formData = new FormData()
-    try {
-      if (titleChanged) {
-        formData.append('title', title)
-      }
-      if (descChanged) {
-        formData.append('desc', desc)
-      }
-      if (imgChanged) {
-        formData.append('img', img, img.name)
-      }
-      await http.patch(`${process.env.NextUrl}/picture/${pictureId}`, formData)
-      await mutate()
-      message.success('تغییرات با موفقیت اعمال شد')
-    } catch (e) {
-      message.error('متاسفانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
-    } finally {
+    if (title.length === 0 && desc.length === 0) {
+      message.error('عنوان و یا شرح نمیتواند خالی باشد')
       dispatch(hideLoading())
+    } else {
+      let formData = new FormData()
+      try {
+        if (titleChanged) {
+          formData.append('title', title)
+        }
+        if (descChanged) {
+          formData.append('desc', desc)
+        }
+        if (imgChanged) {
+          formData.append('img', img, img.name)
+        }
+        await http.patch(`${process.env.NextUrl}/picture/${pictureId}`, formData)
+        await mutate()
+        message.success('تغییرات با موفقیت اعمال شد')
+      } catch (e) {
+        message.error('متاسفانه با خطایی مواجه شدیم، لطفا مجددا تلاش کنید')
+      } finally {
+        dispatch(hideLoading())
+      }
     }
   }
 
@@ -81,12 +86,6 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
             <Form.Item
                 label='عنوان'
                 name='title'
-                rules={[
-                  {
-                    required: true,
-                    message: 'عنوان باید وارد شود'
-                  }
-                ]}
             >
               <Input
                   onChange={e => {
@@ -101,12 +100,6 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
             <Form.Item
                 label='شرح'
                 name='desc'
-                rules={[
-                  {
-                    required: true,
-                    message: 'شرح باید وارد شود'
-                  }
-                ]}
             >
               <Input
                   onChange={e => {
@@ -122,12 +115,6 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
             <Form.Item
                 label='تصویر'
                 name='img'
-                rules={[
-                  {
-                    required: true,
-                    message: 'تصویر باید انتخاب شود'
-                  }
-                ]}
             >
               <Input
                   type='file'
