@@ -114,6 +114,7 @@ const SinglePicturePage = ({initPicture, pictureId}) => {
                     setDesc(e.target.value)
                   }}
                   placeholder='شرح عکس را وارد کنید'
+                  value={desc}
               />
             </Form.Item>
 
