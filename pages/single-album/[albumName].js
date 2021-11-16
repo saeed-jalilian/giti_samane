@@ -258,20 +258,28 @@ export async function getServerSideProps(context) {
   const cookies = cookie.parse(context.req.headers.cookie ?? '')
   const auth = cookies.main
   const {albumName} = context.params
-  const initAlbum = await fetcher(`${process.env.BackendApiUrl}/album/${albumName}`, auth)
-  const initPictures = await fetcher(`${process.env.BackendApiUrl}/album/${albumName}/pictures`, auth)
 
-  if (!auth) {
-    return context.res.writeHead(302, {Location: '/login'}).end()
-  }
+  try {
+    const initAlbum = await fetcher(`${process.env.BackendApiUrl}/album/${albumName}`, auth)
+    const initPictures = await fetcher(`${process.env.BackendApiUrl}/album/${albumName}/pictures`, auth)
 
-  return {
-    props: {
-      initAlbum,
-      initPictures,
-      albumName
+    return {
+      props: {
+        initAlbum,
+        initPictures,
+        albumName
+      }
+    }
+  } catch (e) {
+    return {
+      redirect: {
+        destination: "/user/login",
+        permanent: false
+      }
     }
   }
+
+
 }
 
 export default AlbumPage

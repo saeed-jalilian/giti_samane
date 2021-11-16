@@ -91,22 +91,28 @@ export async function getServerSideProps(context) {
   const galleriesUrl = `${process.env.BackendApiUrl}/albums`
   const cookies = cookie.parse(context.req.headers.cookie ?? '')
   const auth = cookies.main
+  try {
 
-  const initGalleries = await fetcher(galleriesUrl, auth)
+    const initGalleries = await fetcher(galleriesUrl, auth)
 
-  if (!auth) {
-    return context.res.writeHead(302, {Location: '/login'}).end()
-  }
+    return {
+      props: {
+        initGalleries,
+        fallback: {
+          galleriesUrl: initGalleries
+        }
+      },
 
-  return {
-    props: {
-      initGalleries,
-      fallback: {
-        galleriesUrl: initGalleries
+    }
+  } catch (e) {
+    return {
+      redirect: {
+        destination: "/user/login",
+        permanent: false
       }
-    },
-
+    }
   }
+
 }
 
 export default GalleryPage
