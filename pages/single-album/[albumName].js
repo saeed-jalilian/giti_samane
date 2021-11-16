@@ -133,9 +133,13 @@ const AlbumPage = ({initAlbum, initPictures, albumName}) => {
                             layout='fixed'
                             src={picture.img}
                             alt={picture.title}
+                            onClick={async () => await router.push(`${process.env.NextUrl}/picture/${picture.id}`)}
                         />}
                         actions={[
-                          <IoTrashOutline onClick={() => handlePictureDelete(picture.id)} key='delete'/>
+                          <IoTrashOutline onClick={() => handlePictureDelete(picture.id)} key='delete'/>,
+                          <IoPencilOutline
+                              onClick={async () => await router.push(`${process.env.NextUrl}/picture/${picture.id}`)}
+                              key='edit'/>
                         ]}
                     >
                       <Meta description={picture.desc ?? ''}/>
