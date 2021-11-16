@@ -94,11 +94,11 @@ export async function getServerSideProps(context) {
 
   const initGalleries = await fetcher(galleriesUrl, auth)
 
-  if (!initGalleries) {
+  if (!auth) {
     return {
       redirect: {
-        destination: '/',
-        permanent: true
+        destination: '/user/login',
+        permanent: false
       }
     }
   }
